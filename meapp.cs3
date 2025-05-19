@@ -1,2 +1,61 @@
-// Meapp CloudStream плагин для сайта rezka-ua.in
-// Здесь должен быть настоящий код плагина
+class Meapp extends MainScript {
+  constructor() {
+    super();
+    this.name = 'meapp';
+    this.baseUrl = 'https://rezka-ua.in';
+  }
+
+  async load() {
+    this.log('Загрузка категорий');
+    this.addItem({
+      title: 'Фильмы',
+      url: `${this.baseUrl}/films/`,
+      isFolder: true,
+    });
+    this.addItem({
+      title: 'Сериалы',
+      url: `${this.baseUrl}/series/`,
+      isFolder: true,
+    });
+    this.addItem({
+      title: 'Аниме',
+      url: `${this.baseUrl}/cartoons/`,
+      isFolder: true,
+    });
+    this.complete();
+  }
+
+  async loadItems(url) {
+    this.log('Загрузка списка из ' + url);
+    const html = await this.request(url);
+    const parser = new DOMParser();
+    const doc = parser.parseFromString(html, 'text/html');
+    const items = doc.querySelectorAll('.b-content__inline_item');
+    items.forEach(item => {
+      const title = item.querySelector('.b-content__inline_item-link').textContent.trim();
+      const link = item.querySelector('a').href;
+      this.addItem({
+        title,
+        url: link,
+        isFolder: false,
+      });
+    });
+    this.complete();
+  }
+
+  async loadLink(url) {
+    this.log('Загрузка ссылки на видео ' + url);
+    const html = await this.request(url);
+    // Пример: ищем первый mp4 в html
+    const match = html.match(/file:\s*"(https?:\/\/[^"]+\.mp4)"/);
+    if (match) {
+      this.addLink({
+        title: 'Видео',
+        url: match[1],
+      });
+    }
+    this.complete();
+  }
+}
+
+new Meapp();
