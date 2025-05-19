@@ -1,0 +1,9 @@
+[
+  {
+    "name": "meapp",
+    "description": "Плагин для rezka-ua.in",
+    "version": "1.0",
+    "url": "https://raw.githubusercontent.com/moonset228/Meapp/builds/meapp.plugin.js",
+    "icon": "https://i.imgur.com/9Jpl7Kn.png"
+  }
+]
