@@ -1,0 +1,8 @@
+{
+  "name": "meapp",
+  "description": "Плагин для rezka-ua.in",
+  "manifestVersion": 1,
+  "pluginLists": [
+    "https://raw.githubusercontent.com/moonset228/Meapp/builds/plugins.json"
+  ]
+}
